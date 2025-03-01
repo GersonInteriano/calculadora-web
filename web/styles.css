@@ -1,0 +1,377 @@
+/* css/estilos.css */
+
+/* --- Reseteo Básico y Estilos Generales --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente moderna */
+  background-color: #f8f9fa; /* Gris claro, suave */
+  color: #343a40; /* Gris oscuro para texto */
+  line-height: 1.6;
+}
+
+header {
+  background-color: #0056b3; /* Azul oscuro y profesional */
+  color: #fff;
+  padding: 1rem 0;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra sutil */
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+  font-size: 1.75em; /* Título un poco más grande */
+}
+
+nav {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
+nav button {
+  background-color: #fff;
+  color: #0056b3; /* Color del texto igual al del header */
+  border: 1px solid #0056b3; /* Borde para que resalte */
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s; /* Transiciones suaves */
+}
+
+nav button:hover {
+  background-color: #0056b3; /* Azul al hacer hover */
+  color: #fff;
+}
+
+main {
+  max-width: 1000px;
+  margin: 1rem auto;
+  padding: 1rem;
+}
+
+/* --- Secciones Principales --- */
+#calculadora,
+#datosPublicados,
+#seccionAyuda,
+#cargaCSV,
+#reduction-tips,
+#csvSection,
+#csvDisplaySection
+{ /* Añadido para estilizar la sección de recomendaciones */
+  background-color: #fff;
+  border: 1px solid #dee2e6; /* Borde más suave */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra un poco más pronunciada */
+  margin-bottom: 20px;
+  width: 80%;
+  max-width: 900px;
+}
+
+/* --- Encabezados de Sección --- */
+#calculadora h2,
+#datosPublicados h2,
+#seccionAyuda h2,
+#cargaCSV h2,
+#reduction-tips h2, /* Añadido */
+#csvSection h2,
+#csvDisplaySection h2{
+  color: #0056b3; /* Azul oscuro para los títulos */
+  border-bottom: 2px solid #007bff; /* Subrayado azul claro */
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Estilos de la Calculadora --- */
+#calculadora label {
+  display: block; /* Cada label en su propia línea */
+  margin-top: 10px;
+  font-weight: 500; /* Ligeramente más negrita */
+}
+
+#calculadora input[type="number"],
+#calculadora input[type="text"],
+#calculadora select {
+  width: 100%;
+  padding: 10px; /* Más espaciado */
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ced4da; /* Borde gris claro */
+  border-radius: 4px;
+  background-color: #f8f9fa; /* Fondo beige claro */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Transición para el focus */
+}
+
+#calculadora input[type="number"]:focus,
+#calculadora input[type="text"]:focus,
+#calculadora select:focus {
+  border-color: #80bdff; /* Azul al seleccionar */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Sombra azul suave */
+}
+/*Estilo para los campos de los meses en la calculadora*/
+#calculadora .monthly-inputs input[type="number"]{
+  background-color: #f8f9fa;
+  width: 90%;
+}
+
+
+#calculadora button {
+  background-color: #28a745; /* Verde */
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+#calculadora button:hover {
+  background-color: #218838; /* Verde más oscuro al hacer hover */
+}
+
+#calculadora .oculto { /* Para las secciones avanzadas ocultas */
+display: none;
+}
+
+.error {
+  color: #dc3545; /* Rojo para errores */
+  margin-top: 0.5rem;
+}
+
+/* --- Sección de Resultados --- */
+#resultados h3 {
+  color: #28a745; /* Verde para los títulos de resultados */
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+#datosPublicados h3{
+color: #28a745;
+}
+
+/* --- Sección de Datos Publicados --- */
+#datosPublicados table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#datosPublicados th,
+#datosPublicados td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#datosPublicados th {
+  background-color: #e9ecef; /* Gris claro para los encabezados */
+  font-weight: 500;
+}
+
+/* --- Sección de Carga de CSV --- */
+#cargaCSV label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+#cargaCSV input[type="file"],
+#cargaCSV select {
+  margin-bottom: 1rem;
+}
+/*Estilo para el botón de cargar CSV*/
+#btnProcesarCSV{
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+#btnProcesarCSV:hover {
+  background-color: #0056b3;
+}
+
+#csvTableDisplay table { /* Aplica también a la tabla dentro de csvDisplaySection */
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#csvTableDisplay th,
+#csvTableDisplay td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#csvTableDisplay th {
+  background-color: #f2f2f2;
+}
+
+/* --- Sección de Ayuda (Modal) --- */
+#seccionAyuda {
+  position: fixed; /* Fijo en la pantalla */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrado */
+  width: 80%;
+  max-width: 600px;
+  background-color: #fff;
+  border: 2px solid #007bff; /* Borde azul */
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000; /* Asegura que esté por encima de todo */
+}
+
+.oculto {
+      display: none;  /* Oculto por defecto */
+  }
+
+
+#seccionAyuda h2 {
+color: #0056b3; /* Azul para el título */
+  margin-bottom: 1rem;
+}
+
+#seccionAyuda .contenido-ayuda {
+  max-height: 400px;
+  overflow-y: auto; /* Scroll si el contenido es largo */
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+}
+
+#seccionAyuda p {
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+/*Estilo botón cerrar ayuda*/
+#seccionAyuda button {
+background-color: #dc3545; /* Rojo oscuro */
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto; /* Centra el botón */
+}
+
+/* --- Sección de Recomendaciones de Sostenibilidad (MEJORADA)--- */
+
+#reduction-tips h2 {
+  color: #28a745; /* Verde para el título principal */
+  border-bottom: 2px solid #28a745; /* Subrayado verde */
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+#reduction-tips h3 {
+  color: #0056b3; /* Azul oscuro para los subtítulos (Luz, Agua, etc.) */
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem; /* Más espacio debajo de los subtítulos */
+ /* border-bottom: 1px solid #28a745; *//*Quitamos la linea de abajo*/
+  padding-bottom: 0.25rem;
+}
+
+/* En lugar de listas, usaremos un layout de "tarjetas" */
+#reduction-tips-content {
+  display: grid;  /* Usamos Grid Layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas responsivas */
+  gap: 1.5rem; /* Espacio entre las tarjetas */
+}
+
+.recommendation-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-5px); /* Ligero efecto de elevación */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+.recommendation-card h3 {
+  color: #0056b3; /* Azul oscuro para los títulos */
+  margin-top: 0;  /* Quitamos el margen superior */
+  margin-bottom: 0.5rem;
+  font-size: 1.25em;
+}
+
+.recommendation-card ul {
+  list-style: none; /* Quitamos las viñetas */
+  padding-left: 0; /* Quitamos el padding izquierdo */
+}
+
+.recommendation-card li {
+  margin-bottom: 0.5rem;
+  padding-left: 20px; /* Espacio para el icono */
+  position: relative; /* Para posicionar el icono */
+}
+/*Poner iconos a la izquierda de las recomendaciones*/
+.recommendation-card li::before {
+  content: '✓'; /* Usamos un tick como icono (puedes usar otra cosa)*/
+  color: #28a745;  /* Color verde */
+  position: absolute; /* Posicionamiento absoluto */
+  left: 0;       /* A la izquierda del texto */
+  font-weight: bold;
+}
+
+.recommendation-card a {
+  color: #007bff; /* Azul para enlaces */
+  text-decoration: none; /* Quitamos el subrayado por defecto */
+}
+
+.recommendation-card a:hover {
+  text-decoration: underline; /* Subrayado al hacer hover */
+}
+
+/* --- Footer --- */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #0056b3;
+  color: #fff;
+  position: relative; /* O 'absolute' si quieres que siempre esté abajo */
+  bottom: 0;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+/* --- Responsividad (Media Queries) --- */
+@media (max-width: 768px) {
+  label {
+      width: 100%; /* Ocupa todo el ancho en pantallas pequeñas */
+  }
+
+  input[type="number"],
+  input[type="text"],
+  select,
+  #cargaCSV input[type="file"],
+  #cargaCSV select
+   {
+      width: 100%; /* Ancho completo en pantallas pequeñas */
+  }
+   /* Ajuste para la sección de ayuda en pantallas pequeñas */
+  #seccionAyuda {
+      width: 95%; /* Más ancho en pantallas pequeñas */
+      max-height: 90vh; /* Más altura */
+  }
+  .monthly-inputs {
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Ajustado a 100px */
+
+}
+}
