@@ -1,0 +1,260 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Consumo - ITB</title>
+  <link rel="stylesheet" href="web/styles.css">
+  <!-- Se incluye Chart.js y PapaParse para las gráficas y lectura de CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Calculadora de Consumo para Centro Educativo</h1>
+    <nav>
+      <button id="btnAyuda">Ayuda</button>
+    </nav>
+  </header>
+  
+  <main>
+    <!-- Calculadora -->
+    <section id="calculadora">
+      <h2>Calculadora</h2>
+      <!-- Sección Electricidad -->
+      <fieldset>
+        <legend>Electricidad</legend>
+        <label for="baseElectrica">Consumo Base (kWh):</label>
+        <input type="number" id="baseElectrica" placeholder="Valor base" min="0">
+        
+        <label for="factorElectrico">Factor Estacional:</label>
+        <input type="number" id="factorElectrico" placeholder="Factor (ej. 1.2 para invierno)" min="0" step="0.01">
+        
+        <label for="mesesElectrico">Número de Meses:</label>
+        <input type="number" id="mesesElectrico" placeholder="Meses" min="0">
+        
+        <label for="metodoElectrico">Método de Cálculo:</label>
+        <select id="metodoElectrico">
+          <option value="basico">Básico (factor estacional)</option>
+          <option value="avanzado">Avanzado (datos mensuales)</option>
+        </select>
+        
+        <div id="advancedElectricidad" class="oculto">
+          <label for="arrayElectrico">Datos Mensuales (12 valores separados por comas):</label>
+          <input type="text" id="arrayElectrico" placeholder="Ej: 200,210,205,195,190,200,210,220,230,240,250,260">
+          
+          <label for="factorVacacionalElectrico">Factor Vacacional (ej. 0.5 para agosto):</label>
+          <input type="number" id="factorVacacionalElectrico" placeholder="Factor vacacional" min="0" step="0.01">
+          
+          <label for="produccionFotovoltaica">Producción Fotovoltaica Diaria (kWh):</label>
+          <input type="number" id="produccionFotovoltaica" placeholder="kWh diarios" min="0">
+          
+          <label for="autoconsumoElectrico">Autoconsumo (%) :</label>
+          <input type="number" id="autoconsumoElectrico" placeholder="Ej: 80" min="0" max="100">
+          
+          <label for="consumoLunesViernes">Consumo Lunes a Viernes (kWh totales):</label>
+          <input type="number" id="consumoLunesViernes" placeholder="Valor L-V" min="0">
+          
+          <label for="consumoFinSemana">Consumo Fin de Semana (kWh totales):</label>
+          <input type="number" id="consumoFinSemana" placeholder="Valor FDS" min="0">
+        </div>
+      </fieldset>
+      
+      <!-- Sección Agua -->
+      <fieldset>
+        <legend>Agua</legend>
+        <label for="baseAgua">Consumo Base (litros):</label>
+        <input type="number" id="baseAgua" placeholder="Valor base" min="0">
+        
+        <label for="factorAgua">Factor Estacional:</label>
+        <input type="number" id="factorAgua" placeholder="Factor (ej. 2.0 para verano)" min="0" step="0.01">
+        
+        <label for="mesesAgua">Número de Meses:</label>
+        <input type="number" id="mesesAgua" placeholder="Meses" min="0">
+        
+        <label for="metodoAgua">Método de Cálculo:</label>
+        <select id="metodoAgua">
+          <option value="basico">Básico (factor estacional)</option>
+          <option value="avanzado">Avanzado (datos mensuales)</option>
+        </select>
+        
+        <div id="advancedAgua" class="oculto">
+          <label for="arrayAgua">Datos Mensuales (12 valores separados por comas):</label>
+          <input type="text" id="arrayAgua" placeholder="Ej: 150,160,155,..." >
+        </div>
+      </fieldset>
+      
+      <!-- Sección Consumibles de Oficina -->
+      <fieldset>
+        <legend>Consumibles de Oficina</legend>
+        <label for="baseOficina">Gasto Base (€/mes):</label>
+        <input type="number" id="baseOficina" placeholder="Valor base" min="0" step="0.01">
+        
+        <label for="mesesOficina">Número de Meses:</label>
+        <input type="number" id="mesesOficina" placeholder="Meses" min="0">
+        
+        <label for="metodoOficina">Método de Cálculo:</label>
+        <select id="metodoOficina">
+          <option value="basico">Básico (valor fijo)</option>
+          <option value="avanzado">Avanzado (datos mensuales)</option>
+        </select>
+        
+        <div id="advancedOficina" class="oculto">
+          <label for="arrayOficina">Datos Mensuales de Gasto (12 valores separados por comas):</label>
+          <input type="text" id="arrayOficina" placeholder="Ej: 100,120,110,..." >
+        </div>
+      </fieldset>
+      
+      <!-- Sección Productos de Limpieza -->
+      <fieldset>
+        <legend>Productos de Limpieza</legend>
+        <label for="baseLimpieza">Gasto Base (€/mes):</label>
+        <input type="number" id="baseLimpieza" placeholder="Valor base" min="0" step="0.01">
+        
+        <label for="mesesLimpieza">Número de Meses:</label>
+        <input type="number" id="mesesLimpieza" placeholder="Meses" min="0">
+        
+        <label for="metodoLimpieza">Método de Cálculo:</label>
+        <select id="metodoLimpieza">
+          <option value="basico">Básico (valor fijo)</option>
+          <option value="avanzado">Avanzado (datos mensuales)</option>
+        </select>
+        
+        <div id="advancedLimpieza" class="oculto">
+          <label for="arrayLimpieza">Datos Mensuales de Gasto (12 valores separados por comas):</label>
+          <input type="text" id="arrayLimpieza" placeholder="Ej: 80,90,85,..." >
+        </div>
+      </fieldset>
+      
+      <button id="btnCalcular">Calcular</button>
+      <div id="errorMensaje" class="error"></div>
+    </section>
+    
+    <!-- Sección de Resultados -->
+    <section id="resultados">
+      <div id="resultadoElectrico"></div>
+      <div id="resultadoAvanzadoElectrico"></div>
+      <div id="resultadoAgua"></div>
+      <div id="resultadoOficina"></div>
+      <div id="resultadoLimpieza"></div>
+    </section>
+    
+    <!-- Sección de Publicación de Datos y Gráficas -->
+    <section id="published-data-section">
+      <h2>Datos Publicados</h2>
+      <div id="datosPublicados"></div>
+      <!-- Gráficas para resultados manuales -->
+      <canvas id="graficaElectricidad" width="400" height="200"></canvas>
+      <canvas id="graficaAgua" width="400" height="200"></canvas>
+      <canvas id="graficaOficina" width="400" height="200"></canvas>
+      <canvas id="graficaLimpieza" width="400" height="200"></canvas>
+      <!-- Tablas comparativas -->
+      <div id="tablaComparativaElectrica"></div>
+      <div id="tablaComparativaAgua"></div>
+      <div id="tablaComparativaOficina"></div>
+      <div id="tablaComparativaLimpieza"></div>
+    </section>
+    
+    <!-- Sección de Lectura de CSV -->
+    <section id="csvSection">
+      <h2>Importar Datos CSV</h2>
+      <label for="csvFileInput">Selecciona archivo CSV:</label>
+      <input type="file" id="csvFileInput" accept=".csv">
+      <br>
+      <label for="csvResourceSelect">Seleccionar Recurso:</label>
+      <select id="csvResourceSelect">
+        <option value="electricidad">Electricidad</option>
+        <option value="agua">Agua</option>
+        <option value="oficina">Consumibles de Oficina</option>
+        <option value="limpieza">Productos de Limpieza</option>
+      </select>
+      <button id="btnProcesarCSV">Procesar CSV</button>
+      <div id="csvTableDisplay"></div>
+      <canvas id="csvGraph" width="400" height="200"></canvas>
+    </section>
+    
+    <!-- Sección de Recomendaciones de Sostenibilidad -->
+    <section id="recomendaciones">
+      <h2>Recomendaciones de Sostenibilidad</h2>
+      <h3>Luz (Electricidad)</h3>
+      <ul>
+        <li>Utiliza bombillas LED de bajo consumo.</li>
+        <li>Aprovecha la luz natural durante el día.</li>
+        <li>Apaga dispositivos y luces cuando no estén en uso.</li>
+      </ul>
+      <h3>Agua</h3>
+      <ul>
+        <li>Instala dispositivos de ahorro de agua en grifos y duchas.</li>
+        <li>Revisa y repara fugas para evitar desperdicios.</li>
+        <li>Utiliza sistemas de riego eficientes para áreas verdes.</li>
+      </ul>
+      <h3>Consumibles de Oficina</h3>
+      <ul>
+        <li>Reduce el uso de papel optando por documentos digitales.</li>
+        <li>Recicla y reutiliza materiales de oficina siempre que sea posible.</li>
+        <li>Elige productos con certificación ecológica.</li>
+      </ul>
+      <h3>Productos de Limpieza</h3>
+      <ul>
+        <li>Utiliza productos de limpieza ecológicos que tengan menor impacto ambiental.</li>
+        <li>Opta por métodos de limpieza que reduzcan el consumo de agua y químicos.</li>
+        <li>Recicla los envases y utiliza productos concentrados para minimizar residuos.</li>
+      </ul>
+    </section>
+    
+    <!-- Sección de Ayuda Integrada -->
+    <div id="seccionAyuda" class="ayuda oculto">
+      <h2>Guía de Ayuda</h2>
+      <button id="cerrarAyuda">Cerrar Ayuda</button>
+      <div class="contenido-ayuda">
+        <h3>Método de Cálculo Básico</h3>
+        <p>
+          Este modo utiliza un único factor estacional aplicado a un valor base de consumo. 
+          Por ejemplo, si su consumo base es de 150 kWh y el factor estacional para invierno es 1.2, 
+          la estimación para un mes será: 150 * 1.2 = 180 kWh.
+        </p>
+        <h3>Método de Cálculo Avanzado</h3>
+        <p>
+          En este modo, el usuario puede introducir 12 valores mensuales (uno por cada mes del año) 
+          para obtener una estimación más precisa. Por ejemplo, si ingresa: 
+          <strong>200,210,205,195,190,200,210,220,230,240,250,260</strong>, 
+          la calculadora sumará estos valores para obtener el consumo anual.
+        </p>
+        <h3>Cálculos Avanzados de Electricidad</h3>
+        <p>
+          Además del consumo total, se calcularán datos adicionales como:
+        </p>
+        <ul>
+          <li>Consumo Promedio Mensual.</li>
+          <li>Consumo Teórico Anual basado en datos mensuales.</li>
+          <li>Consumo Real Anual ajustado por periodos vacacionales (por ejemplo, reduciendo a la mitad el consumo de agosto).</li>
+          <li>Producción Fotovoltaica Anual (si se dispone de datos diarios).</li>
+          <li>Autoconsumo Real Diario basado en el porcentaje ingresado.</li>
+          <li>Consumo Total de Electricidad de Lunes a Viernes y Fin de Semana.</li>
+          <li>Porcentajes y promedios diarios de consumo entre días laborables y fin de semana.</li>
+        </ul>
+        <h3>Importar Datos CSV</h3>
+        <p>
+          Puedes importar datos desde un archivo CSV con el siguiente formato:
+        </p>
+        <pre>
+Fecha,Consumo (kWh),Costo (€),Importado (kWh),Exportado (kWh),Autoconsumo (kWh),Autoconsumo Rate (%),Pico Potencia (kW),CO₂ Evitado (t),Pérdida Exportación (kWh),Ingresos (€)
+2025-01-01,157.47,-,117.53,2.62,39.94,93.84,9.22,0.02,1.38,0.31
+2025-01-02,159.55,-,114.12,3.43,45.43,92.98,11.24,0.02,1.58,0.42
+... (más filas)
+        </pre>
+        <p>
+          Después de cargar el CSV, selecciona el recurso que deseas visualizar para ver la tabla y la gráfica comparativa.
+        </p>
+      </div>
+    </div>
+    
+  </main>
+  
+  <footer>
+    <p>&copy; 2023 ITB. Todos los derechos reservados.</p>
+  </footer>
+  
+  <script src="web/script.js"></script>
+</body>
+</html>
